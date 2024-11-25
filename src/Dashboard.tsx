@@ -5,10 +5,16 @@ import { connectSerial, writeSerial } from "./serial";
 import FeederProgress from "./FeederProgress";
 import { SensorCard } from "./SensorCard";
 
+interface SerialPort {
+  close(): unknown;
+  readable: ReadableStream<string>;
+  writable: WritableStream<string>;
+}
+
 export default function Dashboard() {
 	const [luzEncendida, setLuzEncendida] = useState(false);
 	const [tiempoAlimentacion, setTiempoAlimentacion] = useState(30);
-	const [port, setPort] = useState(null);
+	const [port, setPort] = useState<SerialPort | null>(null);
 	const [reader, setReader] =
 		useState<ReadableStreamDefaultReader<string> | null>(null);
 	const [sensorData, setSensorData] = useState({

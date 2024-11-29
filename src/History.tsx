@@ -147,7 +147,7 @@ export default function History({ update }: HistoryProps) {
 				</CardBody>
 			</Card>
 
-			<Card>
+			{/* <Card>
 				<CardHeader>Historial de Luz</CardHeader>
 				<CardBody>
 					<Table aria-label="Tabla de Historial de Luz">
@@ -175,7 +175,7 @@ export default function History({ update }: HistoryProps) {
 						</TableBody>
 					</Table>
 				</CardBody>
-			</Card>
+			</Card> */}
 		</div>
 	);
 }

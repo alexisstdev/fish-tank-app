@@ -8,7 +8,7 @@ export const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Dashboard() {
 	// const [luzEncendida, setLuzEncendida] = useState(false);
-	const [tiempoAlimentacion, setTiempoAlimentacion] = useState(3600);
+	const [tiempoAlimentacion, setTiempoAlimentacion] = useState(30);
 	const [sensorData, setSensorData] = useState({
 		temperature: "0°C",
 		humidity: "0%",
@@ -62,7 +62,7 @@ export default function Dashboard() {
 	};
  */
 	const alimentar = async () => {
-		setTiempoAlimentacion(3600);
+		setTiempoAlimentacion(30);
 
 		try {
 			await fetch(`${API_URL}/feedingHistory`, {
@@ -75,7 +75,7 @@ export default function Dashboard() {
 				}),
 			});
 
-			const esp32Url = "http://10.22.0.198/api/alimentar";
+			const esp32Url = "http://10.22.0.103/api/alimentar";
 
 			const datos = {
 				mensaje: "alimentar",

@@ -117,7 +117,6 @@ export default function History({ update }: HistoryProps) {
 						<Tooltip />
 						<Legend />
 						<Line type="monotone" dataKey="temperature" stroke="#ff0000" />
-						<Line type="monotone" dataKey="humidity" stroke="#0000ff" />
 					</LineChart>
 				</CardBody>
 			</Card>

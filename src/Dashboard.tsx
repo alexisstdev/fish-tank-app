@@ -1,5 +1,4 @@
-import { Card, Image } from "@nextui-org/react";
-import { Power } from "lucide-react";
+import { Image } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import FeederProgress from "./FeederProgress";
 import { SensorCard } from "./SensorCard";
@@ -8,7 +7,7 @@ import History from "./History";
 export const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Dashboard() {
-	const [luzEncendida, setLuzEncendida] = useState(false);
+	// const [luzEncendida, setLuzEncendida] = useState(false);
 	const [tiempoAlimentacion, setTiempoAlimentacion] = useState(30);
 	const [sensorData, setSensorData] = useState({
 		temperature: "0°C",
@@ -42,7 +41,7 @@ export default function Dashboard() {
 		return () => clearInterval(interval);
 	}, []);
 
-	const toggleLuz = async () => {
+	/* 	const toggleLuz = async () => {
 		const newState = !luzEncendida;
 		setLuzEncendida(newState);
 
@@ -61,7 +60,7 @@ export default function Dashboard() {
 			console.error(error);
 		}
 	};
-
+ */
 	const alimentar = async () => {
 		setTiempoAlimentacion(30);
 
@@ -76,10 +75,10 @@ export default function Dashboard() {
 				}),
 			});
 
-			const esp32Url = "http://192.168.1.100/api/alimentar";
+			const esp32Url = "http://192.168.101.190/api/alimentar";
 
 			const datos = {
-				mensaje: "alimenta al fakin pescado",
+				mensaje: "alimentar",
 			};
 
 			fetch(esp32Url, {
@@ -94,7 +93,6 @@ export default function Dashboard() {
 					console.log("Respuesta del ESP32:", data);
 				})
 				.catch((error) => {
-					alert("Error al hacer la solicitud");
 					console.error("Error al hacer la solicitud:", error);
 				});
 
@@ -108,7 +106,7 @@ export default function Dashboard() {
 		<div className="max-w-md mx-auto h-screen bg-[#ffe6dd]">
 			<div className="flex justify-between items-center p-4">
 				<div className="flex items-center gap-2">
-					<h1 className="text-4xl font-medium">Pecera</h1>
+					<h1 className="text-4xl font-medium">Pulpicera</h1>
 				</div>
 			</div>
 
@@ -127,7 +125,7 @@ export default function Dashboard() {
 				<FeederProgress progress={tiempoAlimentacion} feedNow={alimentar} />
 			</div>
 
-			<div className="px-4 mb-6 mt-10">
+			{/* <div className="px-4 mb-6 mt-10">
 				<h2 className="text-2xl font-medium mb-3">Luz</h2>
 				<Card
 					className={`w-full py-4 rounded-lg text-white font-bold text-lg transition-colors ${luzEncendida ? "bg-yellow-400" : "bg-gray-400"}`}
@@ -143,7 +141,7 @@ export default function Dashboard() {
 						</button>
 					</div>
 				</Card>
-			</div>
+			</div> */}
 			<History update={updateHistory} />
 		</div>
 	);

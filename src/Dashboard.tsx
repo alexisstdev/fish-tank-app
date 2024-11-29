@@ -62,7 +62,7 @@ export default function Dashboard() {
 	};
  */
 	const alimentar = async () => {
-		setTiempoAlimentacion(30);
+		setTiempoAlimentacion(3600);
 
 		try {
 			await fetch(`${API_URL}/feedingHistory`, {

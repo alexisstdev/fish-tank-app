@@ -16,7 +16,7 @@ export default function FeederProgress({
 						value: "text-3xl font-semibold text-white text-blue-600",
 					}}
 					value={progress}
-					maxValue={30}
+					maxValue={3600}
 					strokeWidth={2}
 					formatOptions={{ style: "unit", unit: "second" }}
 					showValueLabel={true}

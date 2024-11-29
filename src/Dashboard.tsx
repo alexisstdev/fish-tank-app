@@ -8,7 +8,7 @@ export const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Dashboard() {
 	// const [luzEncendida, setLuzEncendida] = useState(false);
-	const [tiempoAlimentacion, setTiempoAlimentacion] = useState(30);
+	const [tiempoAlimentacion, setTiempoAlimentacion] = useState(3600);
 	const [sensorData, setSensorData] = useState({
 		temperature: "0°C",
 		humidity: "0%",

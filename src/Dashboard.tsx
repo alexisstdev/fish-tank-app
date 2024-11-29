@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import FeederProgress from "./FeederProgress";
 import { SensorCard } from "./SensorCard";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function Dashboard() {
 	const [luzEncendida, setLuzEncendida] = useState(false);
 	const [tiempoAlimentacion, setTiempoAlimentacion] = useState(30);
@@ -26,9 +28,7 @@ export default function Dashboard() {
 
 	useEffect(() => {
 		const fetchSensorData = async () => {
-			const response = await fetch(
-				`${import.meta.env.VITE_API_URL}/sensorData`,
-			);
+			const response = await fetch(`${API_URL}/sensorData`);
 			const data = await response.json();
 			setSensorData(data);
 		};
@@ -41,7 +41,7 @@ export default function Dashboard() {
 		setLuzEncendida(newState);
 
 		try {
-			await fetch(`${import.meta.env.VITE_API_URL}/lightHistory`, {
+			await fetch(`${API_URL}/lightHistory`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -58,7 +58,7 @@ export default function Dashboard() {
 	const alimentar = async () => {
 		setTiempoAlimentacion(30);
 
-		await fetch(`${import.meta.env.VITE_API_URL}/feedingHistory`, {
+		await fetch(`${API_URL}/feedingHistory`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

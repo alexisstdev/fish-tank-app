@@ -3,8 +3,9 @@ import { Power } from "lucide-react";
 import { useState, useEffect } from "react";
 import FeederProgress from "./FeederProgress";
 import { SensorCard } from "./SensorCard";
+import History from "./History";
 
-const API_URL = import.meta.env.VITE_API_URL;
+export const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Dashboard() {
 	const [luzEncendida, setLuzEncendida] = useState(false);
@@ -13,6 +14,7 @@ export default function Dashboard() {
 		temperature: "0°C",
 		humidity: "0%",
 	});
+	const [updateHistory, setUpdateHistory] = useState(0);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -50,6 +52,7 @@ export default function Dashboard() {
 					state: newState,
 				}),
 			});
+			setUpdateHistory((prev) => prev + 1); // Update history
 		} catch (error) {
 			console.error(error);
 		}
@@ -58,15 +61,20 @@ export default function Dashboard() {
 	const alimentar = async () => {
 		setTiempoAlimentacion(30);
 
-		await fetch(`${API_URL}/feedingHistory`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				fedAt: new Date(),
-			}),
-		});
+		try {
+			await fetch(`${API_URL}/feedingHistory`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					fedAt: new Date(),
+				}),
+			});
+			setUpdateHistory((prev) => prev + 1); // Update history
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	return (
@@ -109,6 +117,7 @@ export default function Dashboard() {
 					</div>
 				</Card>
 			</div>
+			<History update={updateHistory} />
 		</div>
 	);
 }

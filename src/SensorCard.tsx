@@ -15,7 +15,7 @@ export function SensorCard({ temperature, humidity }: SensorCardProps) {
 				</CardHeader>
 				<CardBody className="overflow-visible py-2 flex items-center justify-center gap-4">
 					<Thermometer className="h-10 w-10 text-red-500" />
-					<span className="text-3xl ml-2 font-medium">{temperature}</span>
+					<span className="text-3xl ml-2 font-medium">{temperature}°C</span>
 				</CardBody>
 			</Card>
 			<Card className="pb-4">
@@ -24,7 +24,7 @@ export function SensorCard({ temperature, humidity }: SensorCardProps) {
 				</CardHeader>
 				<CardBody className="overflow-visible py-2 flex items-center justify-center gap-4">
 					<Droplet className="h-10 w-10 text-blue-500" />
-					<span className="text-3xl ml-2 font-medium">{humidity}</span>
+					<span className="text-3xl ml-2 font-medium">{humidity}%</span>
 				</CardBody>
 			</Card>
 		</div>

@@ -1,12 +1,7 @@
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Thermometer } from "lucide-react";
 
-interface SensorCardProps {
-	temperature: string;
-	humidity: string;
-}
-
-export function SensorCard({ temperature }: SensorCardProps) {
+export function SensorCard() {
 	return (
 		<div className="grid grid-cols-1 gap-6">
 			<Card className="pb-4">
@@ -15,7 +10,7 @@ export function SensorCard({ temperature }: SensorCardProps) {
 				</CardHeader>
 				<CardBody className="overflow-visible py-2 flex items-center justify-center gap-4">
 					<Thermometer className="h-10 w-10 text-red-500" />
-					<span className="text-3xl ml-2 font-medium">{temperature}°C</span>
+					<span className="text-3xl ml-2 font-medium">21°C</span>
 				</CardBody>
 			</Card>
 		</div>

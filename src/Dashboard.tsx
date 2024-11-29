@@ -9,10 +9,6 @@ export const API_URL = import.meta.env.VITE_API_URL;
 export default function Dashboard() {
 	// const [luzEncendida, setLuzEncendida] = useState(false);
 	const [tiempoAlimentacion, setTiempoAlimentacion] = useState(30);
-	const [sensorData, setSensorData] = useState({
-		temperature: "0°C",
-		humidity: "0%",
-	});
 	const [updateHistory, setUpdateHistory] = useState(0);
 
 	useEffect(() => {
@@ -26,20 +22,6 @@ export default function Dashboard() {
 
 		return () => clearInterval(interval);
 	}, [tiempoAlimentacion]);
-
-	useEffect(() => {
-		const fetchSensorData = async () => {
-			const response = await fetch(`${API_URL}/sensorData`);
-			const data = await response.json();
-			setSensorData(data);
-		};
-
-		fetchSensorData();
-
-		const interval = setInterval(fetchSensorData, 3000); // Fetch data every 3 seconds
-
-		return () => clearInterval(interval);
-	}, []);
 
 	/* 	const toggleLuz = async () => {
 		const newState = !luzEncendida;
@@ -114,10 +96,7 @@ export default function Dashboard() {
 
 			<div className="px-4 mb-6 mt-10">
 				<h2 className="text-2xl font-medium mb-3">Sensor</h2>
-				<SensorCard
-					humidity={sensorData.humidity}
-					temperature={sensorData.temperature}
-				/>
+				<SensorCard />
 			</div>
 
 			<div className="px-4 mb-6 mt-10">

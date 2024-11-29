@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model SensorData {
+  id          Int      @id @default(autoincrement())
+  temperature String
+  humidity    String
+  createdAt   DateTime @default(now())
+}
+
+model FeedingHistory {
+  id    Int      @id @default(autoincrement())
+  fedAt DateTime @default(now())
+}
+
+model LightHistory {
+  id        Int      @id @default(autoincrement())
+  state     Boolean
+  changedAt DateTime @default(now())
+}

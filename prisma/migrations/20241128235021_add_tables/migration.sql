@@ -1,0 +1,26 @@
+-- CreateTable
+CREATE TABLE `SensorData` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `temperature` VARCHAR(191) NOT NULL,
+    `humidity` VARCHAR(191) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `FeedingHistory` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `fedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `LightHistory` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `state` BOOLEAN NOT NULL,
+    `changedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

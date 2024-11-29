@@ -1,22 +1,12 @@
-import { Button, Card, Image } from "@nextui-org/react";
+import { Card, Image } from "@nextui-org/react";
 import { Power } from "lucide-react";
 import { useState, useEffect } from "react";
-import { connectSerial, writeSerial } from "./serial";
 import FeederProgress from "./FeederProgress";
 import { SensorCard } from "./SensorCard";
-
-interface SerialPort {
-  close(): unknown;
-  readable: ReadableStream<string>;
-  writable: WritableStream<string>;
-}
 
 export default function Dashboard() {
 	const [luzEncendida, setLuzEncendida] = useState(false);
 	const [tiempoAlimentacion, setTiempoAlimentacion] = useState(30);
-	const [port, setPort] = useState<SerialPort | null>(null);
-	const [reader, setReader] =
-		useState<ReadableStreamDefaultReader<string> | null>(null);
 	const [sensorData, setSensorData] = useState({
 		temperature: "0°C",
 		humidity: "0%",
@@ -35,60 +25,48 @@ export default function Dashboard() {
 	}, [tiempoAlimentacion]);
 
 	useEffect(() => {
-		const connect = async () => {
-			const { port, reader } = await connectSerial();
-			setPort(port);
-			setReader(reader);
+		const fetchSensorData = async () => {
+			const response = await fetch(
+				`${import.meta.env.VITE_API_URL}/sensorData`,
+			);
+			const data = await response.json();
+			setSensorData(data);
 		};
 
-		connect();
+		fetchSensorData();
 	}, []);
 
-	useEffect(() => {
-		if (reader) {
-			const readLoop = async () => {
-				while (true) {
-					const { value, done } = await reader.read();
-					if (done) {
-						break;
-					}
-					if (value) {
-						const data = JSON.parse(value);
-						setSensorData(data);
-					}
-				}
-			};
-
-			readLoop();
-		}
-	}, [reader]);
-
 	const toggleLuz = async () => {
-		setLuzEncendida(!luzEncendida);
-		if (port) {
-			await writeSerial(port, "TOGGLE_LIGHT\n");
+		const newState = !luzEncendida;
+		setLuzEncendida(newState);
+
+		try {
+			await fetch(`${import.meta.env.VITE_API_URL}/lightHistory`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					state: newState,
+				}),
+			});
+		} catch (error) {
+			console.error(error);
 		}
 	};
 
 	const alimentar = async () => {
 		setTiempoAlimentacion(30);
-		if (port) {
-			await writeSerial(port, "FEED\n");
-		}
-	};
 
-	const reconnect = async () => {
-		if (reader) {
-			await reader.cancel();
-			setReader(null);
-		}
-		if (port) {
-			await port.close();
-			setPort(null);
-		}
-		const { port: newPort, reader: newReader } = await connectSerial();
-		setPort(newPort);
-		setReader(newReader);
+		await fetch(`${import.meta.env.VITE_API_URL}/feedingHistory`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				fedAt: new Date(),
+			}),
+		});
 	};
 
 	return (
@@ -97,7 +75,6 @@ export default function Dashboard() {
 				<div className="flex items-center gap-2">
 					<h1 className="text-4xl font-medium">Pecera</h1>
 				</div>
-				<Button onClick={reconnect}>Conectar serial</Button>
 			</div>
 
 			<Image src="/image.gif" />

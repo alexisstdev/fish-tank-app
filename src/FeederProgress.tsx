@@ -8,6 +8,7 @@ export default function FeederProgress({
 		<Card className="border-none bg-white text-blue-600 shadow-lg">
 			<CardBody className="flex flex-col items-center justify-center p-6">
 				<CircularProgress
+					aria-label="Alimentador"
 					classNames={{
 						svg: "w-44 h-44 drop-shadow-md",
 						indicator: "stroke-blue-600",

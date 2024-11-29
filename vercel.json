@@ -1,9 +1,6 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" },
-    {
-      "source": "/api/alimentar",
-      "destination": "http://10.22.0.198/api/alimentar"
-    }
+    { "source": "/(.*)", "destination": "/" }
+    
   ]
 }

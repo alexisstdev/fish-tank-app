@@ -36,6 +36,10 @@ export default function Dashboard() {
 		};
 
 		fetchSensorData();
+
+		const interval = setInterval(fetchSensorData, 3000); // Fetch data every 3 seconds
+
+		return () => clearInterval(interval);
 	}, []);
 
 	const toggleLuz = async () => {
@@ -71,7 +75,30 @@ export default function Dashboard() {
 					fedAt: new Date(),
 				}),
 			});
-			setUpdateHistory((prev) => prev + 1); // Update history
+
+			const esp32Url = "http://192.168.1.100/api/alimentar";
+
+			const datos = {
+				mensaje: "alimenta al fakin pescado",
+			};
+
+			fetch(esp32Url, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+				body: new URLSearchParams(datos).toString(),
+			})
+				.then((response) => response.json())
+				.then((data) => {
+					console.log("Respuesta del ESP32:", data);
+				})
+				.catch((error) => {
+					alert("Error al hacer la solicitud");
+					console.error("Error al hacer la solicitud:", error);
+				});
+
+			setUpdateHistory((prev) => prev + 1);
 		} catch (error) {
 			console.error(error);
 		}
@@ -88,7 +115,7 @@ export default function Dashboard() {
 			<Image src="/image.gif" />
 
 			<div className="px-4 mb-6 mt-10">
-				<h2 className="text-2xl font-medium mb-3">Sensores</h2>
+				<h2 className="text-2xl font-medium mb-3">Sensor</h2>
 				<SensorCard
 					humidity={sensorData.humidity}
 					temperature={sensorData.temperature}

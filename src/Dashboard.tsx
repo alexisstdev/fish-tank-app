@@ -75,7 +75,7 @@ export default function Dashboard() {
 				}),
 			});
 
-			const esp32Url = "http://192.168.101.190/api/alimentar";
+			const esp32Url = "http://10.22.0.198/api/alimentar";
 
 			const datos = {
 				mensaje: "alimentar",
